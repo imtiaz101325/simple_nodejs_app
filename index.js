@@ -3,7 +3,7 @@ const express = require("express");
 const graphqlHTTP = require("express-graphql");
 const { buildSchema } = require("graphql");
 const fs = require("fs");
-const path = require('path');
+const path = require("path");
 
 // Create the express app
 const app = express();
@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname, "frontend", "build")));
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`
   type Query {
-    getText: String
+    text: String
   }
 
   type Mutation {
@@ -48,7 +48,7 @@ function setText({ text }) {
 
 // The root provides a resolver function for each API endpoint
 const root = {
-  getText,
+  text: getText,
   setText,
 };
 

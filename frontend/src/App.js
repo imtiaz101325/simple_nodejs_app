@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { useQuery } from "@apollo/react-hooks";
+import { gql } from "apollo-boost";
 
 const AppContainer = styled.div`
   display: flex;
@@ -50,12 +52,27 @@ const SubmitButton = styled.button`
   }
 `;
 
+const TEXT_QUERY = gql`
+  {
+    text
+  }
+`;
 function App() {
+  const { loading, error, data } = useQuery(TEXT_QUERY);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error</p>;
+
   return (
     <AppContainer>
       <AppHeader>Simple React App</AppHeader>
       <AppContent>
-        <SimpleTextArea placeholder="Write something and press submit" cols="30" rows="5"/>
+        <SimpleTextArea
+          value={data.text}
+          placeholder="Write something and press submit"
+          cols="30"
+          rows="5"
+        />
         <SubmitButton>Submit</SubmitButton>
       </AppContent>
     </AppContainer>
