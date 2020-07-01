@@ -1,30 +1,62 @@
 "use strict";
 const express = require("express");
-var graphqlHTTP = require('express-graphql');
-var { buildSchema } = require('graphql');
+const graphqlHTTP = require("express-graphql");
+const { buildSchema } = require("graphql");
+const fs = require("fs");
 
 // Create the express app
 const app = express();
 
 // Construct a schema, using GraphQL schema language
-var schema = buildSchema(`
+const schema = buildSchema(`
   type Query {
-    hello: String
+    getText: String
+  }
+
+  type Mutation {
+    setText(text: String): Boolean
   }
 `);
 
+function getText() {
+  try {
+    const data = fs.readFileSync("simple.txt", { flag: "a+" });
+
+    return data.toString();
+  } catch (error) {
+    console.log(error);
+  }
+
+  return "";
+}
+
+function setText({ text }) {
+  try {
+    fs.writeFileSync("simple.txt", text, { flag: "a+" });
+
+    return true;
+  } catch (error) {
+    console.log(error);
+  }
+
+  return false;
+}
+
 // The root provides a resolver function for each API endpoint
-var root = {
-  hello: () => {
-    return 'Hello world!';
-  },
+const root = {
+  getText,
+  setText,
 };
 
-app.use('/graphql', graphqlHTTP({
-  schema: schema,
-  rootValue: root,
-  graphiql: true,
-}));
+// GraphQL endpoint
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema: schema,
+    rootValue: root,
+    graphiql: true,
+  })
+);
 
 // Error handlers
 app.use(function fourOhFourHandler(req, res) {
