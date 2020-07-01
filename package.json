@@ -1,0 +1,31 @@
+{
+  "name": "simple_nodejs_app",
+  "version": "1.0.0",
+  "description": "A simple Api and web server using Node.js",
+  "author": "Sk Imtiaz Ahmed <imtiaz101325@gmail.com>",
+  "keywords": [
+    "node.js",
+    "express.js",
+    "react.js",
+    "apollo",
+    "graphql",
+    "react-hooks"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/imtiaz101325/simple_nodejs_app"
+  },
+  "scripts": {
+    "start": "./bin/app",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "http-errors": "^1.8.0",
+    "pino": "^6.3.2",
+    "pino-http": "^5.2.0",
+    "pino-pretty": "^4.0.0"
+  }
+}
