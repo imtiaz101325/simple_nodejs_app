@@ -18,7 +18,8 @@
     "url": "https://github.com/imtiaz101325/simple_nodejs_app"
   },
   "scripts": {
-    "start": "node index.js",
+    "postinstall": "cd frontend && npm install",
+    "start": "cd frontend && npm run build && cd ../ && node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

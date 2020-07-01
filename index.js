@@ -3,9 +3,13 @@ const express = require("express");
 const graphqlHTTP = require("express-graphql");
 const { buildSchema } = require("graphql");
 const fs = require("fs");
+const path = require('path');
 
 // Create the express app
 const app = express();
+
+// Serve static files
+app.use(express.static(path.join(__dirname, "frontend", "build")));
 
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`
