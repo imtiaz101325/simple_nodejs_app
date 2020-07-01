@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
@@ -65,8 +65,15 @@ const TEXT_MUTATION = gql`
 `;
 
 function App() {
+  const [inputText, setInputText] = useState("");
   const { loading, error, data } = useQuery(TEXT_QUERY);
-  const [setText, { text }] = useMutation(TEXT_MUTATION);
+  const [setText] = useMutation(TEXT_MUTATION);
+
+  useEffect(() => {
+    if (data && data.text) {
+      setInputText(data.text);
+    }
+  }, [data]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
@@ -76,13 +83,14 @@ function App() {
       <AppHeader>Simple React App</AppHeader>
       <AppContent>
         <SimpleTextArea
-          value={data.text}
+          value={inputText}
+          onChange={input => setInputText(input.target.value)}
           placeholder="Write something and press submit"
           cols="30"
           rows="5"
         />
         <SubmitButton
-          onClick={() => setText({ variables: { text: "Not so hello" } })}
+          onClick={() => setText({ variables: { text: inputText } })}
         >
           Submit
         </SubmitButton>
