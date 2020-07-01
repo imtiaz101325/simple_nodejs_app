@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 
 const AppContainer = styled.div`
@@ -57,8 +57,16 @@ const TEXT_QUERY = gql`
     text
   }
 `;
+
+const TEXT_MUTATION = gql`
+  mutation SetText($text: String!) {
+    setText(text: $text)
+  }
+`;
+
 function App() {
   const { loading, error, data } = useQuery(TEXT_QUERY);
+  const [setText, { text }] = useMutation(TEXT_MUTATION);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
@@ -73,7 +81,11 @@ function App() {
           cols="30"
           rows="5"
         />
-        <SubmitButton>Submit</SubmitButton>
+        <SubmitButton
+          onClick={() => setText({ variables: { text: "Not so hello" } })}
+        >
+          Submit
+        </SubmitButton>
       </AppContent>
     </AppContainer>
   );
