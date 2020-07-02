@@ -13,4 +13,5 @@ export default styled.textarea`
   resize: none;
   overflow: auto;
   background: #fefaf6;
+  margin: 1em;
 `;

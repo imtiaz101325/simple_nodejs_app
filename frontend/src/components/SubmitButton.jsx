@@ -15,5 +15,6 @@ export default styled.button`
     background: #31b9c8;
     border-color: #2f3d39;
     transition: all 0.4s ease 0s;
+    cursor: pointer;
   }
 `;
