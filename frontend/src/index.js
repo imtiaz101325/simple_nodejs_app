@@ -3,11 +3,19 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { ApolloProvider } from "@apollo/react-hooks";
+import { createGlobalStyle } from "styled-components";
 
 import client from "./client";
 
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+  }
+`;
+
 ReactDOM.render(
   <React.StrictMode>
+    <GlobalStyle />
     <ApolloProvider client={client}>
       <App />
     </ApolloProvider>
