@@ -36,7 +36,7 @@ function getText() {
 
 function setText({ text }) {
   try {
-    fs.writeFileSync("simple.txt", text, { flag: "a+" });
+    fs.writeFileSync("simple.txt", text, { flag: "w+" });
 
     return true;
   } catch (error) {
